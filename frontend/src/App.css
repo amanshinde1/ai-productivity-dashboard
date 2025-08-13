@@ -1,17 +1,9 @@
 /* src/App.css */
-
-/* Tailwind CSS base, components, utilities */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/*
-  This CSS file is intentionally minimal.
-  The styling for this application is primarily handled by Chakra UI's
-  `extendTheme` functionality in App.js and inline Chakra UI props.
-  Tailwind CSS concepts are integrated via Chakra UI's theme.
+/* This CSS file is intentionally minimal.
+   Styling for this application relies primarily on Chakra UI props and themes.
 */
 
+/* Global resets */
 body {
   margin: 0;
   font-family: 'Inter', sans-serif; /* Fallback to sans-serif */
@@ -20,31 +12,5 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
-
-/* Any global overrides or very specific non-Chakra styles can go here */
-/* For example, if you needed to hide scrollbars globally or apply a very specific reset */
-
-/* Example: Custom scrollbar styling (optional) */
-/*
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #2A2A2A;
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #4A4A4A;
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #5A5A5A;
-}
-*/
