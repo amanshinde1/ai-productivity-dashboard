@@ -24,7 +24,7 @@ from .views import (
     AppWebsiteViewSet,
     ProjectViewSet,
     MyTokenObtainPairView,
-    get_ai_suggestion,   # ✅ imported directly
+    get_ai_suggestion,   
 )
 
 # Optional test token view class
