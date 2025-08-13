@@ -89,7 +89,7 @@ urlpatterns = [
 
     # AI suggestion endpoints
     path('ai/suggest/', suggest_task, name='ai_suggest'),
-    path('ai-suggestion/', get_ai_suggestion, name='ai-suggestion'),  # ✅ fixed import
+    path('ai-suggestion/', get_ai_suggestion, name='ai-suggestion'),  
 
     # Dashboard metrics
     path('dashboard-metrics/', DashboardMetricsView.as_view(), name='dashboard_metrics'),
