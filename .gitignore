@@ -1,14 +1,14 @@
-# Secrets
+# Secrets & environment variables
 .env
 .env.*
 secret_key.txt
 
-# Python cache
+# Python cache and compiled files
 __pycache__/
 *.py[cod]
 *$py.class
 
-# Django database
+# Django database files
 *.sqlite3
 db.sqlite3
 
@@ -18,25 +18,25 @@ env/
 ENV/
 .venv/
 
-# IDE / Editor
+# IDE/project files
 .vscode/
 .idea/
 
-# MacOS system files
+# macOS system files
 .DS_Store
 
-# Celery
+# Celery scheduler files
 celerybeat-schedule
 
 # Backup folders
 frontend_backup_20250725/
 
-# Logs & coverage
+# Logs and coverage data
 *.log
 htmlcov/
 .coverage
 
-# Frontend
+# Frontend dependencies and build folders
 node_modules/
 build/
 dist/
