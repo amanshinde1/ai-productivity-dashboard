@@ -1,0 +1,82 @@
+.notifications-container {
+  max-width: 600px;
+  margin: 1rem auto;
+  padding: 1rem;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  font-family: Arial, sans-serif;
+}
+
+.unread-toggle {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.unread-toggle input {
+  margin-right: 0.5rem;
+  cursor: pointer;
+}
+
+.loading {
+  color: #555;
+  font-style: italic;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+}
+
+.notifications-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.notification-item {
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.notification-item.unread {
+  background-color: #e6f7ff;
+  font-weight: 600;
+}
+
+.notification-item.read {
+  color: #888;
+  opacity: 0.7;
+}
+
+.message {
+  font-size: 1rem;
+}
+
+.timestamp {
+  font-size: 0.8rem;
+  color: #555;
+}
+
+.mark-read-btn {
+  align-self: flex-start;
+  margin-top: 0.5rem;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.85rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.mark-read-btn:hover {
+  background-color: #0056b3;
+}

@@ -1,0 +1,58 @@
+/* src/components/ConfirmationModal.css */
+
+/*
+  This class creates a full-screen, fixed overlay that centers its content.
+  It's crucial for the modal to appear as a popup.
+*/
+.modal-backdrop {
+  position: fixed; /* Essential: Positions the element relative to the viewport */
+  top: 0;          /* Essential: Aligns to the top edge of the viewport */
+  left: 0;         /* Essential: Aligns to the left edge of the viewport */
+  width: 100%;     /* Essential: Makes it span the full width of the viewport */
+  height: 100%;    /* Essential: Makes it span the full height of the viewport */
+  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black backdrop */
+  display: flex;   /* Essential: Enables flexbox for centering */
+  justify-content: center; /* Essential: Centers content horizontally */
+  align-items: center;     /* Essential: Centers content vertically */
+  z-index: 1000;   /* Essential: Ensures it appears on top of other content */
+}
+
+/*
+  This class styles the actual modal content box.
+*/
+.modal-content {
+  background-color: var(--background-light); /* Uses background variable from App.css */
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  max-width: 400px; /* Maximum width of the modal */
+  width: 90%; /* Responsive width: takes 90% of available space up to max-width */
+  text-align: center;
+  position: relative; /* Allows z-index or other positioning within the modal if needed */
+}
+
+.modal-message {
+  margin-bottom: 20px;
+  font-size: 1.1em;
+  color: var(--text-dark); /* Uses text variable from App.css */
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 600px) {
+  .modal-content {
+    padding: 20px;
+  }
+  .modal-actions {
+    flex-direction: column; /* Stack buttons vertically on small screens */
+    gap: 10px;
+  }
+  .modal-actions button {
+    width: 100%; /* Full width buttons on small screens */
+  }
+}

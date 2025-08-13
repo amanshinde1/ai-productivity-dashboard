@@ -1,0 +1,48 @@
+# Secrets
+.env
+.env.*
+secret_key.txt
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django database
+*.sqlite3
+db.sqlite3
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+
+# IDE / Editor
+.vscode/
+.idea/
+
+# MacOS system files
+.DS_Store
+
+# Celery
+celerybeat-schedule
+
+# Backup folders
+frontend_backup_20250725/
+
+# Logs & coverage
+*.log
+htmlcov/
+.coverage
+
+# Frontend
+node_modules/
+build/
+dist/
+
+# Frontend environment files
+.env.local
+.env.development.local
+.env.production.local
+.env.test.local
