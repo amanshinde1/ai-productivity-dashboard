@@ -9,9 +9,7 @@ const NotFoundPage = () => {
   const bgColor = useColorModeValue('white', 'premiumDark.900');
   const textColor = useColorModeValue('gray.800', 'whiteAlpha.900');
   const headingColor = useColorModeValue('purple.500', 'purple.300');
-  const buttonBg = useColorModeValue('purple.500', 'purple.300');
   const buttonHoverBg = useColorModeValue('purple.600', 'purple.400');
-  const buttonTextColor = useColorModeValue('white', 'gray.800');
 
   return (
     <Flex

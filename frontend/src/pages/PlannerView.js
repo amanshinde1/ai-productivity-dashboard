@@ -25,7 +25,6 @@ import AddTaskModal from '../components/AddTaskModal';
 
 const MotionFlex = motion(Flex);
 
-// Task color based on status/due date
 const getTaskColor = (status, dueDate, colors) => {
   if (status === 'DONE' || status === 'COMPLETED') return colors.completed;
   if (isOverdue(dueDate)) return colors.overdue;
@@ -33,10 +32,9 @@ const getTaskColor = (status, dueDate, colors) => {
   return colors.pending;
 };
 
-const PlannerView = ({ isGuest, onAddTask, onEditTask, onDeleteTask, onLoginPrompt }) => {
-  const { tasks, loading, error, fetchTasks, toggleTaskStatus } = useTaskContext();
+const PlannerView = ({ isGuest, onAddTask, onEditTask, onLoginPrompt }) => {
+  const { tasks, loading, error, fetchTasks, toggleTaskStatus, handleDeleteTask } = useTaskContext();
 
-  // Theme colors
   const bg = useColorModeValue('gray.50', 'gray.900');
   const cardBg = useColorModeValue('background.cardLight', 'background.cardDark');
   const headingColor = useColorModeValue('gray.900', 'whiteAlpha.900');
@@ -53,16 +51,12 @@ const PlannerView = ({ isGuest, onAddTask, onEditTask, onDeleteTask, onLoginProm
   const todayDate = new Date();
   const [currentMonth, setCurrentMonth] = useState(todayDate.getMonth());
   const [currentYear, setCurrentYear] = useState(todayDate.getFullYear());
-
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedTask, setSelectedTask] = useState(null);
   const [defaultDueDate, setDefaultDueDate] = useState('');
-
-  // Track recently changed tasks
   const [recentlyChangedTask, setRecentlyChangedTask] = useState(null);
   const prevPrioritiesRef = useRef({});
 
-  // Build month grid
   const daysInMonth = useMemo(() => {
     const firstDay = new Date(currentYear, currentMonth, 1);
     const firstWeekDay = firstDay.getDay();
@@ -96,14 +90,12 @@ const PlannerView = ({ isGuest, onAddTask, onEditTask, onDeleteTask, onLoginProm
     fetchTasks();
   }, [fetchTasks, currentMonth, currentYear]);
 
-  // Update prev priorities
   useEffect(() => {
     tasks.forEach(t => {
       prevPrioritiesRef.current[t.id] = t.priority;
     });
   }, [tasks]);
 
-  // Filter tasks for this month
   const tasksInMonth = useMemo(() => (
     tasks.filter(task => {
       if (!task.due_date) return false;
@@ -112,7 +104,6 @@ const PlannerView = ({ isGuest, onAddTask, onEditTask, onDeleteTask, onLoginProm
     })
   ), [tasks, currentMonth, currentYear]);
 
-  // Group tasks by day
   const tasksByDay = useMemo(() => {
     const grouped = {};
     tasksInMonth.forEach(task => {
@@ -137,7 +128,6 @@ const PlannerView = ({ isGuest, onAddTask, onEditTask, onDeleteTask, onLoginProm
     setDefaultDueDate('');
   };
 
-  // Clear highlight after delay
   useEffect(() => {
     if (recentlyChangedTask) {
       const t = setTimeout(() => setRecentlyChangedTask(null), 2000);
@@ -147,12 +137,10 @@ const PlannerView = ({ isGuest, onAddTask, onEditTask, onDeleteTask, onLoginProm
 
   return (
     <Box p={6} minH="calc(100vh - 80px)" bg={bg} borderRadius="lg" boxShadow="xl">
-      {/* Screen reader live region */}
       <Box as="span" srOnly aria-live="polite">
         {tasksInMonth.length} tasks this month
       </Box>
 
-      {/* Header */}
       <Flex justify="space-between" align="center" mb={6} flexWrap="wrap">
         <IconButton aria-label="Previous month" icon={<ChevronLeft />} onClick={handlePrevMonth} variant="ghost" />
         <Heading color={headingColor} size="lg" flex="1" textAlign="center">
@@ -189,21 +177,18 @@ const PlannerView = ({ isGuest, onAddTask, onEditTask, onDeleteTask, onLoginProm
 
       {!loading && !error && tasks.length > 0 && (
         <Grid templateColumns="repeat(7, 1fr)" gap={3} bg={cardBg} p={4} borderRadius="xl" boxShadow="lg" minH={360}>
-          {/* Weekday headers */}
           {['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(day => (
             <Text key={day} fontWeight="bold" color={cardHeaderColor} textAlign="center" pb={2}>
               {day}
             </Text>
           ))}
 
-          {/* No tasks this month */}
           {tasksInMonth.length === 0 && (
             <Text fontSize="md" gridColumn="span 7" textAlign="center" color={textColor}>
               No tasks found for this month.
             </Text>
           )}
 
-          {/* Calendar days */}
           {daysInMonth.map((day, idx) => {
             const today = new Date();
             const isToday = day === today.getDate() &&
@@ -232,8 +217,6 @@ const PlannerView = ({ isGuest, onAddTask, onEditTask, onDeleteTask, onLoginProm
                       <AnimatePresence initial={false}>
                         {dayTasks.map(task => {
                           const color = getTaskColor(task.status, task.due_date, colors);
-
-                          // Detect if priority increased
                           const prevPriority = prevPrioritiesRef.current[task.id];
                           const priorityIncreased = prevPriority && task.priority < prevPriority;
                           const isHighlighted = recentlyChangedTask?.id === task.id || priorityIncreased;
@@ -283,7 +266,7 @@ const PlannerView = ({ isGuest, onAddTask, onEditTask, onDeleteTask, onLoginProm
                                     color="white"
                                     variant="ghost"
                                     aria-label={`Delete ${task.title}`}
-                                    onClick={() => !isGuest && onDeleteTask(task.id)}
+                                    onClick={() => !isGuest && handleDeleteTask(task.id)}
                                     isDisabled={isGuest}
                                   />
                                 </HStack>
@@ -301,7 +284,6 @@ const PlannerView = ({ isGuest, onAddTask, onEditTask, onDeleteTask, onLoginProm
         </Grid>
       )}
 
-      {/* Task Modal */}
       <AddTaskModal
         isOpen={isOpen}
         onClose={closeModal}

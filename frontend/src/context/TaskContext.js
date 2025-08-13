@@ -13,6 +13,9 @@ import {
 // Create the context for tasks
 const TaskContext = createContext(null);
 
+// Must match Django REST Framework PAGE_SIZE in settings.py
+const PAGE_SIZE = 3;
+
 export const TaskProvider = ({ children }) => {
   const toast = useToast();
   const { isGuest, isAuthenticated } = useAuthContext();
@@ -60,15 +63,23 @@ export const TaskProvider = ({ children }) => {
       const params = { page, search: searchTerm, status: filterStatus, priority: filterPriority };
       const response = await fetchTasksAPI(params);
 
-      const resultsPerPage = response.data.results?.length || 1;
-      setTasks(response.data.results);
-      setTotalPages(
-        response.data.total_pages ||
-        Math.max(1, Math.ceil(response.data.count / resultsPerPage))
-      );
+      setTasks(response.data.results || []);
+
+      // ✅ Use fixed backend PAGE_SIZE for calculation to avoid jumps
+      const total = response.data.total_pages || Math.max(1, Math.ceil(response.data.count / PAGE_SIZE));
+      setTotalPages(total);
+
       setCurrentPage(page);
     } catch (err) {
       console.error("TaskContext: Error fetching tasks:", err);
+
+      // ✅ Handle out-of-range pages gracefully if backend returns 404
+      if (err.response?.status === 404) {
+        setTasks([]);
+        setCurrentPage(page);
+        return;
+      }
+
       const msg =
         err.response?.status === 401
           ? 'Authentication required to fetch tasks. Please log in.'
@@ -261,8 +272,9 @@ export const TaskProvider = ({ children }) => {
 
   // Pagination
   const handleNextPage = useCallback(() => {
-    if (currentPage < totalPages) fetchTasks(currentPage + 1);
-  }, [currentPage, totalPages, fetchTasks]);
+    // still allow moving beyond last page, will just be empty if no tasks
+    fetchTasks(currentPage + 1);
+  }, [currentPage, fetchTasks]);
 
   const handlePrevPage = useCallback(() => {
     if (currentPage > 1) fetchTasks(currentPage - 1);

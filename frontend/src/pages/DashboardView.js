@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import {
   Box, Text, Heading, Button, VStack, HStack, Icon, useColorModeValue,
-  Center, SimpleGrid, Spinner, useToast, useDisclosure,
+  Center, SimpleGrid, useToast, useDisclosure,
   Table, Thead, Tbody, Tr, Th, Td, Tag, Badge, TableContainer,
   Checkbox, Popover, PopoverTrigger, PopoverContent, PopoverHeader, PopoverBody, PopoverArrow,
   PopoverCloseButton, Skeleton, SkeletonText, useBreakpointValue,
@@ -554,7 +554,6 @@ const DashboardView = () => {
   const [focusCountdown, setFocusCountdown] = useState(getLocalStorageValue('focusCountdown', FOCUS_SESSION_DURATION));
 
   const cardBgColor = useColorModeValue('white', 'gray.700');
-  const textColor = useColorModeValue('gray.700', 'gray.200');
   const cardShadow = useColorModeValue('md', 'lg');
   const mainBg = useColorModeValue('rgba(255, 255, 255, 0.12)', 'rgba(18, 18, 18, 0.8)');
   const glassShadow = '0 0 40px rgba(70,220,255,.25)';

@@ -22,11 +22,6 @@ class TaskAdminForm(forms.ModelForm):
             'app_website', # Ensure app_website and project are included if they are fields in your Task model
             'project',
         )
-        # You can optionally add widgets here for more control over input types
-        # For example, to ensure duration_minutes is a number input:
-        # widgets = {
-        #     'duration_minutes': forms.NumberInput(attrs={'min': 0}),
-        # }
 
 
 @admin.register(Task)
@@ -54,7 +49,7 @@ class TaskAdmin(admin.ModelAdmin):
                 'status', 'priority', 'due_date',
                 'category',
                 'duration_minutes',
-                'app_website', # Ensure app_website and project are included if they are fields in your Task model
+                'app_website',
                 'project',
             )
         }),

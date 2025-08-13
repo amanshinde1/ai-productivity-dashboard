@@ -16,7 +16,7 @@ import {
   AccordionPanel,
   AccordionIcon,
 } from '@chakra-ui/react';
-import { HelpCircle, Mail, Search } from 'lucide-react';
+import { Mail } from 'lucide-react';
 
 // Example FAQ data — can be expanded or fetched dynamically
 const FAQS = [
