@@ -4,3 +4,4 @@ celery==5.5.3
 psycopg2-binary==2.9.10
 dj-database-url==2.2.0
 python-dotenv==1.0.1
+gunicorn
