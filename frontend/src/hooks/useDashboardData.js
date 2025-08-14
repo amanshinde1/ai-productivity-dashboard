@@ -170,6 +170,6 @@ export const useDashboardData = (isAuthenticated, isGuest, selectedDate, activeP
     data,
     loading,
     error,
-    retry: fetchDashboardData // exposing retry for UI
+    retry: fetchDashboardData
   };
 };

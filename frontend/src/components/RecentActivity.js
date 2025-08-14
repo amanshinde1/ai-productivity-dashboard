@@ -2,11 +2,7 @@ import React from 'react';
 import { Box, Text, Stack, Flex, useColorModeValue } from '@chakra-ui/react';
 import { History } from 'lucide-react';
 
-/**
- * RecentActivity component shows a list of recent user activities or history.
- * @param {object} props
- * @param {Array} props.activities - Array of activity objects with id, activity, time fields
- */
+
 const RecentActivity = ({ activities }) => {
   const borderCol = useColorModeValue("rgba(0,255,255,0.10)", "rgba(14,240,255,0.14)");
   const glassBg = useColorModeValue(

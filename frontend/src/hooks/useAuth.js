@@ -4,9 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useToast } from '@chakra-ui/react';
 import { apiClient, setTokens } from '../services/api';
 
-/**
- * A custom hook for managing authentication state, user profile, and notifications.
- */
+
 export const useAuth = () => {
   const navigate = useNavigate();
   const toast = useToast();

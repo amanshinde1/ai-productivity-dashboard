@@ -1,16 +1,19 @@
 import os
 from pathlib import Path
 from datetime import timedelta
+import dj_database_url  # Make sure this is in requirements.txt!
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-**************************************************'  # Replace with your actual secret key
+# SECURITY: Do NOT hardcode secrets. Pull from environment on Render!
+SECRET_KEY = os.environ.get('SECRET_KEY', 'unsafe-default-key-for-dev')
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'  # 'False' in prod, 'True' in dev
 
-DEBUG = True
+# Comma-separated string (e.g. "your-backend.onrender.com,localhost")
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost').split(',')
 
-ALLOWED_HOSTS = []
-
-FRONTEND_URL = 'http://localhost:3000'  # React app URL for password reset emails
+# URL for password reset emails
+FRONTEND_URL = os.environ.get('FRONTEND_URL', 'http://localhost:3000')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -19,13 +22,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_extensions',  # For additional Django features
-    'corsheaders',  # For CORS
-    'rest_framework',  # Django REST Framework
-    'api',  # Your app
-    'rest_framework_simplejwt',  # For JWT authentication
+    'django_extensions',  # Only if in requirements.txt!
+    'corsheaders',
+    'rest_framework',
+    'api',
+    'rest_framework_simplejwt',
     'django.contrib.postgres',
-    'sslserver',
+    # Remove 'sslserver' in production!
 ]
 
 MIDDLEWARE = [
@@ -44,12 +47,12 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],  # Your templates directory
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
-                'django.template.context_processors.request',  # Needed for DRF browsable API
+                'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -59,15 +62,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
+# USE DATABASE_URL FROM ENVIRONMENT (recommended for Render)
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ai_dashboard_db',
-        'USER': 'mydjangouser',
-        'PASSWORD': 'p12345678',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
+    'default': dj_database_url.config(default=os.environ.get("DATABASE_URL")),
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -78,15 +75,13 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
-STATIC_URL = 'static/'
-
+# STATIC FILES CONFIG FOR RENDER
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
@@ -109,31 +104,33 @@ SIMPLE_JWT = {
     'ALGORITHM': 'HS256',
     'SIGNING_KEY': SECRET_KEY,
     'AUTH_HEADER_TYPES': ('Bearer',),
-    # Other settings can be added as needed
 }
 
-# Enable CORS for frontend host and allow cookies to be sent
+# CORS AND CSRF: ALLOW PROD FRONTEND ON RENDER!
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    # Add your Render static site URL here after deployment, e.g.:
+    # "https://prodexa-frontend.onrender.com",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
 
-# CSRF trusted origins to allow frontend to set cookies safely
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
+    # Add your Render static site URL here after deployment, e.g.:
+    # "https://prodexa-frontend.onrender.com",
 ]
 
-# Uncomment in production (with HTTPS)
+# SECURITY: Uncomment for HTTPS once SSL is active
 # SESSION_COOKIE_SECURE = True
 # CSRF_COOKIE_SECURE = True
 
-# Email backend for password reset (development)
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = 'no-reply@yourapp'
+# EMAIL setup (adjust for production as needed)
+EMAIL_BACKEND = os.environ.get("EMAIL_BACKEND", "django.core.mail.backends.console.EmailBackend")
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "no-reply@yourapp")
 
-# Load environment variables
+# Load environment variables from local .env (for dev only)
 from dotenv import load_dotenv
 load_dotenv()
 
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")

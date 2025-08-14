@@ -4,12 +4,8 @@ import {
 } from '@chakra-ui/react';
 import { FaTasks } from 'react-icons/fa';
 
-/**
- * A card component that displays a list of tasks.
- * It shows a title, and a list of tasks with checkboxes.
- */
+
 const TaskListCard = () => {
-  // Define some mock task data for now.
   // In a real application, this data would be fetched from a parent component or an API.
   const mockTasks = [
     { id: 1, text: 'Finish the dashboard UI', isCompleted: false },

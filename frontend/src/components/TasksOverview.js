@@ -4,7 +4,6 @@ import { Bar } from 'react-chartjs-2';
 import { Box, useColorModeValue } from '@chakra-ui/react';
 
 const TasksOverview = ({ categoryBreakdown = { labels: [], datasets: [] } }) => {
-  // Glass style tokens matching dashboard
   const glassBg = useColorModeValue('rgba(255, 255, 255, 0.12)', 'rgba(20, 20, 31, 0.35)');
   const glassShadow = useColorModeValue('0 0 40px rgba(70,220,255,.25)', '0 0 40px rgba(70,220,255,.25)');
   const glassBorder = useColorModeValue('1px solid rgba(255, 255, 255, 0.18)', '1px solid rgba(255, 255, 255, 0.18)');

@@ -65,7 +65,7 @@ export const TaskProvider = ({ children }) => {
 
       setTasks(response.data.results || []);
 
-      // ✅ Use fixed backend PAGE_SIZE for calculation to avoid jumps
+
       const total = response.data.total_pages || Math.max(1, Math.ceil(response.data.count / PAGE_SIZE));
       setTotalPages(total);
 
@@ -73,7 +73,7 @@ export const TaskProvider = ({ children }) => {
     } catch (err) {
       console.error("TaskContext: Error fetching tasks:", err);
 
-      // ✅ Handle out-of-range pages gracefully if backend returns 404
+
       if (err.response?.status === 404) {
         setTasks([]);
         setCurrentPage(page);
@@ -270,9 +270,9 @@ export const TaskProvider = ({ children }) => {
     }
   }, [isGuest, isAuthenticated, toast]);
 
-  // Pagination
+
   const handleNextPage = useCallback(() => {
-    // still allow moving beyond last page, will just be empty if no tasks
+
     fetchTasks(currentPage + 1);
   }, [currentPage, fetchTasks]);
 

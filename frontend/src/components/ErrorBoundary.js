@@ -4,8 +4,7 @@ import React from 'react';
 import { Box, Heading, Text, Button, Flex, useColorModeValue } from '@chakra-ui/react';
 import { RefreshCcw, Home } from 'lucide-react';
 
-// This is a functional component that handles the UI for the error page.
-// It can correctly use the useColorModeValue hook.
+
 const ErrorBoundaryFallbackUI = ({ error }) => {
   const bgColor = useColorModeValue('white', 'premiumDark.900');
   const textColor = useColorModeValue('gray.800', 'whiteAlpha.900');
@@ -70,8 +69,8 @@ const ErrorBoundaryFallbackUI = ({ error }) => {
   );
 };
 
-// This is the class component that catches the errors.
-// It passes the error details to the functional component above.
+
+
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
@@ -85,13 +84,7 @@ class ErrorBoundary extends React.Component {
   componentDidCatch(error, errorInfo) {
     console.error("Uncaught error:", error, errorInfo);
 
-    // Production error reporting integration point
-    // Uncomment and configure when you add error tracking service
-    // if (process.env.NODE_ENV === 'production') {
-    //   // Example: Sentry.captureException(error, { extra: errorInfo });
-    //   // Example: LogRocket.captureException(error);
-    //   // Example: Bugsnag.notify(error, { context: 'ErrorBoundary', ...errorInfo });
-    // }
+
   }
 
   render() {

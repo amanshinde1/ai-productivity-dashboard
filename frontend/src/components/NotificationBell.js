@@ -6,7 +6,7 @@ import { useToast } from '@chakra-ui/react';
 
 function NotificationBell({ onBellClick }) {
   const { isAuthenticated } = useAuthContext();
-  const { notifications } = useNotificationContext(); // Get notifications from NotificationContext
+  const { notifications } = useNotificationContext();
 
   const toast = useToast();
 

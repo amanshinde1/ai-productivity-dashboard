@@ -3,11 +3,7 @@ import React from 'react';
 import { Box, Text, Stack, Flex, useColorModeValue } from '@chakra-ui/react';
 import { Calendar } from 'lucide-react';
 
-/**
- * UpcomingDeadlines component shows a list of upcoming deadlines or tasks.
- * @param {object} props
- * @param {Array} props.deadlines - Array of deadline objects with id, title, dueDate fields
- */
+
 const UpcomingDeadlines = ({ deadlines }) => {
   const borderCol = useColorModeValue("cyan.200", "cyan.700");
   const bgCol = useColorModeValue("whiteAlpha.800", "blackAlpha.400");

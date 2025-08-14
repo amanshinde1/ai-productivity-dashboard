@@ -10,7 +10,7 @@ export const NotificationProvider = ({ children }) => {
   const [notificationsLoading, setNotificationsLoading] = useState(false);
   const [notificationsError, setNotificationsError] = useState(null);
 
-  /** Fetch notifications list from the backend */
+
   const fetchNotifications = useCallback(async () => {
     if (!isAuthenticated || isGuest) {
       setNotifications([]);
@@ -69,10 +69,9 @@ export const NotificationProvider = ({ children }) => {
     }
   }, [isAuthenticated, isGuest, fetchNotifications]);
 
-  /** Context value: Exposes `setNotifications` for batch optimistic updates */
   const contextValue = useMemo(() => ({
     notifications,
-    setNotifications,           // ✅ For instant UI updates in NotificationsPage
+    setNotifications,
     notificationsLoading,
     notificationsError,
     setNotificationsError,

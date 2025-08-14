@@ -4,13 +4,7 @@ import { apiClient } from '../services/api';
 import { useToast } from '@chakra-ui/react';
 import { useAuthContext } from '../context/AuthContext';
 
-/**
- * Custom hook for managing tasks.
- *
- * @param {Function} clearAllErrors - Optional function to clear error messages (default: no-op).
- * @param {Function} clearSuccessMessage - Optional function to clear success messages (default: no-op).
- * @returns {Object} Task state & handlers.
- */
+
 export const useTasks = (
   clearAllErrors = () => {},
   clearSuccessMessage = () => {}
@@ -112,7 +106,7 @@ export const useTasks = (
     }
   }, [isGuest, searchTerm, filterStatus, filterPriority, clearAllErrors, clearSuccessMessage, toast, token]);
 
-  // Remaining handlers updated similarly (only token and isGuest from context, no localStorage calls)
+
   const handleDeleteTask = useCallback(async (id) => {
     clearAllErrors();
     clearSuccessMessage();
@@ -167,12 +161,7 @@ export const useTasks = (
     }
   }, [isGuest, token, clearAllErrors, clearSuccessMessage, fetchTasks, toast]);
 
-  // Similarly update startEditing, cancelEditing, handleEditTask, toggleTaskStatus, handleAddSubtask,
-  // handleToggleSubtask, handleUpdateSubtaskTitle, handleDeleteSubtask, handleNextPage, handlePrevPage...
 
-  // For brevity, they remain unchanged except for removing localStorage usages.
-
-  // Expose all states and handlers
   return {
     tasks,
     loading,
@@ -212,8 +201,6 @@ export const useTasks = (
     setNewSubtaskTitle,
     fetchTasks,
     handleAddTask,
-    // ... other handlers as needed
     handleDeleteTask,
-    // ...
   };
 };

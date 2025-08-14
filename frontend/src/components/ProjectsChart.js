@@ -3,19 +3,13 @@ import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import { COLORS, BASE_CHART_OPTIONS } from '../config/config';
 
-/**
- * ProjectsChart renders a bar chart showing time spent per project.
- * @param {object} props
- * @param {Array} props.projectsSummary - Array of objects with project and duration (seconds or minutes)
- */
+
 const ProjectsChart = ({ projectsSummary }) => {
   if (!projectsSummary || projectsSummary.length === 0) return null;
 
   const labels = projectsSummary.map((item) => item.project);
-  // Assuming duration is in seconds, convert to minutes
   const dataValues = projectsSummary.map((item) => (item.duration ? Math.round(item.duration / 60) : 0));
 
-  // Define bar colors (loop through main colors or provide fallback palette)
   const colorPalette = [
     COLORS.primary,
     COLORS.secondary,

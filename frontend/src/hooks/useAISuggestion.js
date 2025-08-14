@@ -10,7 +10,7 @@ export default function useAISuggestion() {
   const fetchSuggestion = async () => {
     setLoading(true);
 
-    // If mock/demo mode (e.g. for recruiter, static deploy), skip backend and pick local tip
+
     if (process.env.REACT_APP_USE_MOCK === "true") {
       const randomTip = mockSuggestions[Math.floor(Math.random() * mockSuggestions.length)];
       setData({
@@ -21,7 +21,7 @@ export default function useAISuggestion() {
       return;
     }
 
-    // Otherwise—hit the backend for a real suggestion or fallback to backend demo logic
+
     try {
       const res = await apiClient.get("/ai-suggestion/");
       setData(res.data);

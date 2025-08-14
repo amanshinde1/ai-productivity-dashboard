@@ -12,7 +12,6 @@ const TimerControls = ({
   isFocusMode = false,
   onToggleFocusMode,
 }) => {
-  // Format seconds to HH:MM:SS
   const formatTime = (seconds) => {
     if (typeof seconds !== 'number' || isNaN(seconds) || seconds < 0) return '00:00:00';
     const h = Math.floor(seconds / 3600);

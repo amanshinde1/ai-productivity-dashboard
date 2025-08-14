@@ -1,9 +1,6 @@
 /* src/components/ConfirmationModal.css */
 
-/*
-  This class creates a full-screen, fixed overlay that centers its content.
-  It's crucial for the modal to appear as a popup.
-*/
+
 .modal-backdrop {
   position: fixed; /* Essential: Positions the element relative to the viewport */
   top: 0;          /* Essential: Aligns to the top edge of the viewport */

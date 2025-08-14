@@ -3,21 +3,7 @@ import React, { useCallback } from 'react';
 import { Button, Flex, useColorModeValue, Text, Box } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 
-/**
- * NavItem
- * Universal navigation button with optional icon, label/text, logout handler, and route navigation.
- *
- * Props:
- * - icon: React component (icon)
- * - to: string route path
- * - label / children: text to display
- * - onClick: callback when clicked (runs after navigation)
- * - handleLogout: function if this item is logout/exit
- * - closeDrawer: optional function to close mobile drawer after click
- * - isActive: boolean to highlight active item
- * - extra: right-aligned extra element (badge, count, etc.)
- * - color: override text/icon color
- */
+
 const NavItem = ({
   icon: IconCmp,
   to,

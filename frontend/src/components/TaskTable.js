@@ -25,7 +25,6 @@ const formatDate = (dateString) => {
 };
 
 const TaskTable = ({ tasks = [], onTaskUpdate, onDragEnd }) => {
-  // ✅ All hooks at top-level to follow Hooks rules
   const borderColor = useColorModeValue('gray.200', 'gray.700');
   const textColor = useColorModeValue('gray.800', 'gray.200');
   const headerBg = useColorModeValue('gray.100', 'gray.900');
