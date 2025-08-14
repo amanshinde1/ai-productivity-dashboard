@@ -121,17 +121,19 @@ SIMPLE_JWT = {
 # ---- CORS & CSRF ---- #
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
-    # Add Render frontend URL after deployment
+    "http://127.0.0.1:3000",
+    "https://prodexa-ai-productivity.onrender.com",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
-    # Add Render frontend URL after deployment
+    "http://127.0.0.1:3000",
+    "https://prodexa-ai-productivity.onrender.com",
 ]
 
-# ---- EMAIL (console by default) ---- #
+# ---- EMAIL ---- #
 EMAIL_BACKEND = os.environ.get("EMAIL_BACKEND", "django.core.mail.backends.console.EmailBackend")
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "no-reply@yourapp.com")
 
