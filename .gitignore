@@ -1,6 +1,7 @@
 # Secrets & environment variables
 .env
 .env.*
+!.env.example
 secret_key.txt
 
 # Python cache and compiled files
