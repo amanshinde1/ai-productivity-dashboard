@@ -1,20 +1,26 @@
 import os
 from pathlib import Path
 from datetime import timedelta
-import dj_database_url  # Make sure this is in requirements.txt!
+import dj_database_url
+from dotenv import load_dotenv
+
+# Load local .env file for dev (safe)
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY: Do NOT hardcode secrets. Pull from environment on Render!
+# SECURITY
 SECRET_KEY = os.environ.get('SECRET_KEY', 'unsafe-default-key-for-dev')
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'  # 'False' in prod, 'True' in dev
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-# Comma-separated string (e.g. "your-backend.onrender.com,localhost")
+
+
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost').split(',')
 
-# URL for password reset emails
+# URL for frontend (password resets, etc.)
 FRONTEND_URL = os.environ.get('FRONTEND_URL', 'http://localhost:3000')
 
+# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -22,17 +28,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_extensions',  # Only if in requirements.txt!
+    'django_extensions',  # optional dev tool
     'corsheaders',
     'rest_framework',
     'api',
     'rest_framework_simplejwt',
     'django.contrib.postgres',
-    # Remove 'sslserver' in production!
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',  # Must be first for CORS headers
+    'corsheaders.middleware.CorsMiddleware',  # Must be first
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -62,7 +67,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-# USE DATABASE_URL FROM ENVIRONMENT (recommended for Render)
+# DATABASE CONFIG (Render-friendly)
 DATABASES = {
     'default': dj_database_url.config(default=os.environ.get("DATABASE_URL")),
 }
@@ -79,11 +84,12 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# STATIC FILES CONFIG FOR RENDER
+# STATIC FILES
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# REST FRAMEWORK
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -106,31 +112,24 @@ SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
 
-# CORS AND CSRF: ALLOW PROD FRONTEND ON RENDER!
+# CORS / CSRF
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
-    # Add your Render static site URL here after deployment, e.g.:
-    # "https://prodexa-frontend.onrender.com",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
-    # Add your Render static site URL here after deployment, e.g.:
-    # "https://prodexa-frontend.onrender.com",
 ]
 
-# SECURITY: Uncomment for HTTPS once SSL is active
+# Uncomment once SSL is active
 # SESSION_COOKIE_SECURE = True
 # CSRF_COOKIE_SECURE = True
 
-# EMAIL setup (adjust for production as needed)
+# EMAIL
 EMAIL_BACKEND = os.environ.get("EMAIL_BACKEND", "django.core.mail.backends.console.EmailBackend")
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "no-reply@yourapp")
 
-# Load environment variables from local .env (for dev only)
-from dotenv import load_dotenv
-load_dotenv()
-
+# OpenAI API Key
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
