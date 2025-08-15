@@ -4,7 +4,7 @@ from datetime import timedelta
 import dj_database_url
 from dotenv import load_dotenv
 
-# ---- Load environment variables from .env / .env.local ---- #
+# ---- Load environment variables ---- #
 env_file = '.env.local' if os.path.exists('.env.local') else '.env'
 load_dotenv(env_file)
 
@@ -13,7 +13,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ---- SECURITY ---- #
 SECRET_KEY = os.environ.get('SECRET_KEY', 'unsafe-default-key-for-dev')
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost').split(',')
+ALLOWED_HOSTS = os.environ.get(
+    'ALLOWED_HOSTS',
+    'localhost,127.0.0.1,prodexa-ai-productivity-dashboard.onrender.com'
+).split(',')
 
 # ---- FRONTEND URL ---- #
 FRONTEND_URL = os.environ.get('FRONTEND_URL', 'http://localhost:3000')
@@ -38,7 +41,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',  # must be first
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # serves static files in prod
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # static files in prod
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -73,14 +76,17 @@ DATABASE_URL = os.environ.get('DATABASE_URL')
 
 if DATABASE_URL:
     DATABASES = {
-        'default': dj_database_url.parse(
-            DATABASE_URL,
+        'default': dj_database_url.config(
+            default=DATABASE_URL,
             conn_max_age=600,
-            ssl_require=True
+            ssl_require=True,
         )
     }
+    # Ensure psycopg2 uses SSL properly
+    DATABASES['default'].setdefault('OPTIONS', {})
+    DATABASES['default']['OPTIONS']['sslmode'] = 'require'
 else:
-    # Fallback for local dev if DATABASE_URL not set
+    # Local fallback
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -104,9 +110,10 @@ USE_TZ = True
 
 # ---- STATIC FILES ---- #
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
+# ---- DEFAULT AUTO FIELD ---- #
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # ---- REST FRAMEWORK ---- #
@@ -137,19 +144,29 @@ SIMPLE_JWT = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-    "https://prodexa-ai-productivity.onrender.com",
+    FRONTEND_URL,
 ]
 CORS_ALLOW_CREDENTIALS = True
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-    "https://prodexa-ai-productivity.onrender.com",
+    FRONTEND_URL,
 ]
 
 # ---- EMAIL ---- #
-EMAIL_BACKEND = os.environ.get("EMAIL_BACKEND", "django.core.mail.backends.console.EmailBackend")
+EMAIL_BACKEND = os.environ.get(
+    "EMAIL_BACKEND", "django.core.mail.backends.console.EmailBackend"
+)
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "no-reply@yourapp.com")
 
 # ---- OPENAI API KEY ---- #
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
+
+# ---- SECURITY BEST PRACTICES ---- #
+SECURE_SSL_REDIRECT = not DEBUG
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
