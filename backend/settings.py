@@ -18,8 +18,9 @@ ALLOWED_HOSTS = os.environ.get(
     'localhost,127.0.0.1,prodexa-ai-productivity-dashboard.onrender.com'
 ).split(',')
 
-# ---- FRONTEND URL ---- #
+# ---- FRONTEND URLS ---- #
 FRONTEND_URL = os.environ.get('FRONTEND_URL', 'http://localhost:3000')
+PROD_FRONTEND_URL = "https://prodexa-ai-productivity.onrender.com"
 
 # ---- INSTALLED APPS ---- #
 INSTALLED_APPS = [
@@ -145,6 +146,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
     FRONTEND_URL,
+    PROD_FRONTEND_URL,
 ]
 CORS_ALLOW_CREDENTIALS = True
 
@@ -152,6 +154,7 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
     FRONTEND_URL,
+    PROD_FRONTEND_URL,
 ]
 
 # ---- EMAIL ---- #
