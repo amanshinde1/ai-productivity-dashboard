@@ -1,49 +1,49 @@
-# Secrets & environment variables
+# ==== Secrets & environment variables ====
 .env
 .env.*
 !.env.example
+.env.render
+.env.local
+.env.production
+.env.production.local
+.env.development.local
+.env.test.local
 secret_key.txt
 
-# Python cache and compiled files
+# ==== Python cache and compiled files ====
 __pycache__/
 *.py[cod]
 *$py.class
 
-# Django database files
+# ==== Django database files ====
 *.sqlite3
 db.sqlite3
 
-# Virtual environments
+# ==== Virtual environments ====
 venv/
 env/
 ENV/
 .venv/
 
-# IDE/project files
+# ==== IDE/project files ====
 .vscode/
 .idea/
 
-# macOS system files
+# ==== macOS system files ====
 .DS_Store
 
-# Celery scheduler files
+# ==== Celery scheduler files ====
 celerybeat-schedule
 
-# Backup folders
+# ==== Backup folders ====
 frontend_backup_20250725/
 
-# Logs and coverage data
+# ==== Logs and coverage data ====
 *.log
 htmlcov/
 .coverage
 
-# Frontend dependencies and build folders
+# ==== Frontend dependencies and build folders ====
 node_modules/
 build/
 dist/
-
-# Frontend environment files
-.env.local
-.env.development.local
-.env.production.local
-.env.test.local
