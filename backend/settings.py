@@ -4,9 +4,10 @@ from datetime import timedelta
 import dj_database_url
 from dotenv import load_dotenv
 
-# ---- Load environment variables ---- #
+# ---- Load environment variables only if .env file exists ---- #
 env_file = '.env.local' if os.path.exists('.env.local') else '.env'
-load_dotenv(env_file)
+if os.path.exists(env_file):
+    load_dotenv(env_file)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -73,6 +74,9 @@ TEMPLATES = [
 WSGI_APPLICATION = 'backend.wsgi.application'
 
 # ---- DATABASE ---- #
+
+print("DATABASE_URL being used:", os.environ.get("DATABASE_URL"))  # Debug print to confirm env var loaded
+
 DATABASE_URL = os.environ.get('DATABASE_URL')
 
 if DATABASE_URL:
@@ -80,12 +84,10 @@ if DATABASE_URL:
         'default': dj_database_url.config(
             default=DATABASE_URL,
             conn_max_age=600,
-            ssl_require=True,
+            ssl_require=True,  # Keep this for SSL
         )
     }
-    # Ensure psycopg2 uses SSL properly
-    DATABASES['default'].setdefault('OPTIONS', {})
-    DATABASES['default']['OPTIONS']['sslmode'] = 'require'
+    # Remove redundant manual sslmode setting to avoid conflicts
 else:
     # Local fallback
     DATABASES = {
