@@ -11,6 +11,33 @@ AI-powered productivity dashboard built with Django (backend) and React (fronten
 - 🔔 Notifications and ⏳ focus timer features
 - 📱 Responsive UI for desktop and mobile
 
+
+## 🖼 Screenshots
+
+### Login Page
+![Login](screenshots/login.png)
+
+### Dashboard
+![Dashboard](screenshots/dashboard.png)
+
+### My Tasks
+![My Tasks](screenshots/mytasks.png)
+
+### Charts / Analytics
+![Charts](screenshots/charts.png)
+
+### AI Insights
+![Insights](screenshots/Insights.png)
+
+### Settings Page
+![Settings](screenshots/settings.png)
+
+### Help / Guide
+![Help](screenshots/Help.png)
+
+
+
+
 ## 🛠 Tech Stack
 
 - **Backend:** Django, Django REST Framework, Celery (for async tasks)
